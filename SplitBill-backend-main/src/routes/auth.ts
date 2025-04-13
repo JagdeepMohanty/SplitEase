@@ -3,6 +3,7 @@ import { Router } from "express";
 import Joi from "joi";
 import User from "../models/user";
 import { Request, Response } from "express";
+import { UserDocument } from "../types/User";
 
 const router = Router();
 
@@ -15,21 +16,26 @@ router.post("/", async (req: Request, res: Response) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select('+password');
   if (!user) {
     return res.status(404).send("User not found. Invalid email or password.");
+  }
+  if (!user.password) {
+    return res.status(500).send("User password not found");
   }
 
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) return res.status(400).send("Invalid email or password.");
 
   const token = user.generateAuthToken();
-
   res.send(token);
 });
 
 router.post("/updateToken", async (req: Request, res: Response) => {
   const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
   const token = user.generateAuthToken();
   res.send(token);
 });
