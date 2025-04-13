@@ -14,7 +14,7 @@
     "paths": {
       "*": ["node_modules/*"]
     },
-    "types": ["node"],
+    "types": ["node", "express", "cors", "jsonwebtoken", "mongoose", "bcrypt", "lodash", "joi"],
     "noEmit": false
   },
   "include": ["src/**/*"],
