@@ -2,18 +2,13 @@
 
 Split bills with your friends easily and efficiently. Register today with your friends
 
-## Useful Links
-
-- [Live Website](https://split-bill-frontend.vercel.app/)
-- [Backend Repo](https://github.com/rushilp2311/SplitBill-backend)
-- [Hasnode Article] (comming soon)
 
 ### Technologies Used
 
 - Reactjs
 - Nodejs
 - Typescript
-- MongoDB (Hosted on Linode)
+- MongoDB 
 - Tailwind CSS
 
 
