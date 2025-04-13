@@ -121,7 +121,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: any) => {
                   ))}
                 </div>
               </nav>
-            </div> 
+            </div>
           </Transition.Child>
           <div className="w-14 flex-shrink-0" aria-hidden="true"></div>
         </Dialog>

@@ -2,12 +2,18 @@
 
 This is a backend for the SplitBill
 
+## Useful Links
+
+- [Live Website](https://split-bill-frontend.vercel.app/)
+- [Backend Repo](https://github.com/rushilp2311/SplitBill-frontend)
+- [Hasnode Article] (comming soon)
+
 ### Technologies Used
 
 - Reactjs
 - Nodejs
 - Typescript
-- MongoDB 
+- MongoDB (Hosted on Linode)
 - Tailwind CSS
 
 

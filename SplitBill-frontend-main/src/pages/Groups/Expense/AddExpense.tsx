@@ -115,7 +115,7 @@ const AddExpense = ({ group }: any) => {
           name="amount"
           placeholder="0.00"
           type="number"
-          showLeadingIcon
+           showLeadingIcon
           value={data.amount}
           onChange={handleChange}
           error={errors ? errors.amount : ""}
