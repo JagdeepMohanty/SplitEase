@@ -1,7 +1,8 @@
 import Joi from "joi";
-import mongoose, { Document } from "mongoose";
+("joi");
+import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import { UserDocument } from "../types/User";
+import { UserType } from "types";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -26,9 +27,6 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.generateAuthToken = function () {
-  if (!process.env.JWT_PRIVATE_KEY) {
-    throw new Error('JWT_PRIVATE_KEY is not defined in environment variables');
-  }
   const token = jwt.sign(
     {
       _id: this._id,
@@ -40,9 +38,9 @@ userSchema.methods.generateAuthToken = function () {
   return token;
 };
 
-const User = mongoose.model<UserDocument>("User", userSchema);
+const User = mongoose.model("User", userSchema);
 
-const validateUser = (user: Omit<UserDocument, keyof Document>) => {
+const validateUser = (user: UserType) => {
   const schema = {
     name: Joi.string().min(1).max(50).required(),
     email: Joi.string().min(5).max(255).required().email(),

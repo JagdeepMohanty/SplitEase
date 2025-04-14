@@ -1,22 +1,13 @@
 import { Router } from "express";
-import { Request, Response } from "express";
-import authMiddleWare from "../middleware/auth";
-import Expense from "../models/expense";
-import Group from "../models/group";
-import User from "../models/user";
+import { authMiddleWare } from "middleware";
+import { Expense, Group, User } from "models";
 import mongoose from "mongoose";
-import { updateMemberBalances } from "../services/expenseService";
+import { updateMemberBalances } from "services/expenseService";
 
 const router = Router();
 
 // Add Group
-interface GroupRequest {
-  name: string;
-  description?: string;
-  members: string[];
-}
-
-router.post("/", authMiddleWare, async (req: Request<{}, {}, GroupRequest>, res: Response) => {
+router.post("/", authMiddleWare, async (req, res) => {
   const group = new Group({
     name: req.body.name,
     description: req.body.description,
@@ -28,7 +19,7 @@ router.post("/", authMiddleWare, async (req: Request<{}, {}, GroupRequest>, res:
 });
 
 // Get all groups from memberId
-router.get("/member/:memberId", authMiddleWare, async (req: Request<{memberId: string}>, res: Response) => {
+router.get("/member/:memberId", authMiddleWare, async (req, res) => {
   const memberId = req.params.memberId;
   let groups = await Group.find({ members: memberId }).lean();
   groups = groups.map(async (group) => {
@@ -43,7 +34,7 @@ router.get("/member/:memberId", authMiddleWare, async (req: Request<{memberId: s
 });
 
 // Get Expense
-router.get("/:groupId", authMiddleWare, async (req: Request<{groupId: string}>, res: Response) => {
+router.get("/:groupId", authMiddleWare, async (req, res) => {
   const groupId = req.params.groupId;
   const group = await Group.findById(groupId)
     .populate("members", {
@@ -61,7 +52,7 @@ router.get("/:groupId", authMiddleWare, async (req: Request<{groupId: string}>, 
 router.delete(
   "/:groupId/member/:memberId",
   authMiddleWare,
-  async (req: Request<{groupId: string, memberId: string}>, res: Response) => {
+  async (req, res) => {
     const groupId = req.params.groupId;
     const memberId = req.params.memberId;
     const group = await Group.findById(groupId);
@@ -94,7 +85,7 @@ router.delete(
 );
 
 // Add Member
-router.post("/:groupId/member/:memberId", authMiddleWare, async (req: Request<{groupId: string, memberId: string}>, res: Response) => {
+router.post("/:groupId/member/:memberId", authMiddleWare, async (req, res) => {
   const groupId = req.params.groupId;
   const memberId = req.params.memberId;
   const group = await Group.findById(groupId);
@@ -128,7 +119,7 @@ router.post("/:groupId/member/:memberId", authMiddleWare, async (req: Request<{g
 });
 
 // Delete group
-router.delete("/:groupId", authMiddleWare, async (req: Request<{groupId: string}>, res: Response) => {
+router.delete("/:groupId", authMiddleWare, async (req, res) => {
   const groupId = req.params.groupId;
   const group = await Group.findById(groupId);
   if (!group) {

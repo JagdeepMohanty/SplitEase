@@ -1,6 +1,0 @@
-{
-  "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/cors": "^2.8.17"
-  }
-}
